@@ -63,15 +63,14 @@ extension OnboardingContentView {
         }
         view.addSubview(contentView)
 
-        // add constraints
-        for attribute in [NSLayoutConstraint.Attribute.left, NSLayoutConstraint.Attribute.right, NSLayoutConstraint.Attribute.top] {
-            (view, contentView) >>>- { $0.attribute = attribute; return }
-        }
-        (view, contentView) >>>- {
-            $0.attribute = .bottom
-            $0.constant = bottomConstant
-            return
-        }
+        let guide = view.layoutMarginsGuide
+        NSLayoutConstraint.activate([
+            guide.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            guide.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            guide.topAnchor.constraint(equalTo: contentView.topAnchor),
+            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: bottomConstant)
+        ])
+        
         return contentView
     }
 }

@@ -133,7 +133,7 @@ extension PaperOnboarding {
         contentView = OnboardingContentView.contentViewOnView(self,
                                                               delegate: self,
                                                               itemsCount: itemsCount,
-                                                              bottomConstant: pageViewBottomConstant * -1 - pageViewSelectedRadius)
+                                                              bottomConstant: pageViewBottomConstant + pageViewSelectedRadius)
         pageView = createPageView()
         gestureControl = GestureControl(view: self, delegate: self)
 
