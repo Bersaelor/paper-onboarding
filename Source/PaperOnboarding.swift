@@ -160,7 +160,7 @@ extension PaperOnboarding {
         let pageView = PageView.pageViewOnView(
             self,
             itemsCount: itemsCount,
-            bottomConstant: pageViewBottomConstant * -1,
+            bottomConstant: pageViewBottomConstant,
             radius: pageViewRadius,
             selectedRadius: pageViewSelectedRadius,
             itemColor: { [weak self] in

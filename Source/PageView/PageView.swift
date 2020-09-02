@@ -56,7 +56,14 @@ class PageView: UIView {
 
 extension PageView {
 
-    class func pageViewOnView(_ view: UIView, itemsCount: Int, bottomConstant: CGFloat, radius: CGFloat, selectedRadius: CGFloat, itemColor: @escaping (Int) -> UIColor) -> PageView {
+    class func pageViewOnView(
+        _ view: UIView,
+        itemsCount: Int,
+        bottomConstant: CGFloat,
+        radius: CGFloat,
+        selectedRadius: CGFloat,
+        itemColor: @escaping (Int) -> UIColor
+    ) -> PageView {
         let pageView = PageView(frame: CGRect.zero,
                                 itemsCount: itemsCount,
                                 radius: radius,
@@ -65,26 +72,17 @@ extension PageView {
         pageView.translatesAutoresizingMaskIntoConstraints = false
         pageView.alpha = 0.4
         view.addSubview(pageView)
-
-      let layoutAttribs:[(NSLayoutConstraint.Attribute, Int)] =  [(NSLayoutConstraint.Attribute.left, 0), (NSLayoutConstraint.Attribute.right, 0), (NSLayoutConstraint.Attribute.bottom, Int(bottomConstant))]
-      
-        // add constraints
-      for (attribute, const) in layoutAttribs {
-            (view, pageView) >>>- {
-                $0.constant = CGFloat(const)
-                $0.attribute = attribute
-                return
-            }
-        }
-        pageView >>>- {
-            $0.attribute = .height
-            $0.constant = 30
-            return
-        }
-
+                        
+        NSLayoutConstraint.activate([
+            view.safeAreaLayoutGuide.leadingAnchor.constraint(equalTo: pageView.leadingAnchor),
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: pageView.trailingAnchor),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: pageView.bottomAnchor, constant: bottomConstant),
+            pageView.heightAnchor.constraint(equalToConstant: 30)
+        ])
+                
         return pageView
     }
-
+    
     func currentIndex(_ index: Int, animated: Bool) {
 
         if 0 ..< itemsCount ~= index {
